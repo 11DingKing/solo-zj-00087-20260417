@@ -34,11 +34,18 @@ exports.cssLoaders = function (options) {
     const loaders = options.usePostCSS ? [cssLoader, postcssLoader] : [cssLoader]
 
     if (loader) {
+      const finalLoaderOptions = Object.assign({}, loaderOptions, {
+        sourceMap: options.sourceMap
+      })
+
+      // Use dart-sass instead of node-sass for sass/scss
+      if (loader === 'sass') {
+        finalLoaderOptions.implementation = require('sass')
+      }
+
       loaders.push({
         loader: loader + '-loader',
-        options: Object.assign({}, loaderOptions, {
-          sourceMap: options.sourceMap
-        })
+        options: finalLoaderOptions
       })
     }
 

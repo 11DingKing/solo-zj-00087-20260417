@@ -110,7 +110,7 @@ export default {
           this.formData.email = contact.email || ''
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || '加载联系人失败'
+        const errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || '加载联系人失败'
         showErrorToast(errorMessage)
         this.$router.push({ name: 'Contacts' })
       } finally {
@@ -185,7 +185,7 @@ export default {
           this.$router.push({ name: 'Contacts' })
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || '操作失败'
+        const errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || '操作失败'
         showErrorToast(errorMessage)
       } finally {
         this.submitting = false

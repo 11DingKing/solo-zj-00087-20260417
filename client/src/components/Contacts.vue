@@ -5,7 +5,7 @@
     <ConfirmDialog
       :visible="confirmDialogVisible"
       title="确认删除"
-      :message="`确定要删除联系人「${contactToDelete?.name}」吗？`"
+      :message="`确定要删除联系人「${contactToDelete && contactToDelete.name ? contactToDelete.name : ''}」吗？`"
       @confirm="handleConfirmDelete"
       @cancel="handleCancelDelete"
     />
@@ -131,7 +131,7 @@ export default {
           this.currentPage = data.page || 1
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || '获取联系人列表失败'
+        const errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || '获取联系人列表失败'
         showErrorToast(errorMessage)
         this.contacts = []
         this.total = 0
@@ -179,7 +179,7 @@ export default {
           await this.fetchContacts()
         }
       } catch (error) {
-        const errorMessage = error.response?.data?.message || error.message || '删除联系人失败'
+        const errorMessage = (error.response && error.response.data && error.response.data.message) || error.message || '删除联系人失败'
         showErrorToast(errorMessage)
       } finally {
         this.loading = false
